@@ -1,7 +1,7 @@
 /*---Fonts---*/
 @font-face {
     font-family: "Rick and Morty";
-    src: url("/fonts/get_schwifty.ttf") format('truetype');
+    src: url("./fonts/get_schwifty.ttf") format('truetype');
 }
 
 /*---General---*/
