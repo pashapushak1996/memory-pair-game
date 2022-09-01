@@ -160,18 +160,18 @@ html {
 
 @media only screen and (min-width: 481px) and (max-width: 768px) {
     html {
-        font-size: 12px;
+        font-size: 10px;
     }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
     html {
-        font-size: 14px;
+        font-size: 12px;
     }
 }
 
 @media only screen and (min-width: 1025px) {
     html {
-        font-size: 16px;
+        font-size: 14px;
     }
 }
