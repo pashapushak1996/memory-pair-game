@@ -1,38 +1,6 @@
-const pictures = [
-    {
-        "id": 1,
-        "name": "Rick Sanchez",
-        "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-    },
-    {
-        "id": 2,
-        "name": "Morty Smith",
-        "image": "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
-    }, {
-        "id": 3,
-        "name": "Summer Smith",
-        "image": "https://rickandmortyapi.com/api/character/avatar/3.jpeg"
-    }, {
-        "id": 4,
-        "name": "Beth Smith",
-        "image": "https://rickandmortyapi.com/api/character/avatar/4.jpeg"
-    }, {
-        "id": 5,
-        "name": "Jerry Smith",
-        "image": "https://rickandmortyapi.com/api/character/avatar/5.jpeg"
-    }, {
-        "id": 6,
-        "name": "Abadango Cluster Princess",
-        "image": "https://rickandmortyapi.com/api/character/avatar/6.jpeg"
-    }, {
-        "id": 7,
-        "name": "Abradolf Lincler",
-        "image": "https://rickandmortyapi.com/api/character/avatar/7.jpeg"
-    }, {
-        "id": 8,
-        "name": "Adjudicator Rick",
-        "image": "https://rickandmortyapi.com/api/character/avatar/8.jpeg"
-    }];
+"use strict";
+
+import pictures from './data.json' assert { type: 'json' };
 
 
 const shuffleArray = (arr) => {
@@ -69,10 +37,20 @@ let firstCard;
 let secondCard;
 let count = 1;
 
+const animation = () => {
+    document.querySelector('.rick').classList.add('active');
+    document.querySelector('.rick-right').classList.add('active');
+    setTimeout(() => {
+        document.querySelector('.rick').classList.remove('active');
+        document.querySelector('.rick-right').classList.remove('active');
+    }, 2000);
+}
+
 const checkPair = (firstCard, secondCard) => {
     if (secondCard.dataset['character'] === firstCard.dataset['character']) {
         firstCard.classList.add('none');
         secondCard.classList.add('none');
+        animation();
     } else {
         setTimeout(() => {
             firstCard.classList.toggle('flipped');
