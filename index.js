@@ -9,46 +9,45 @@ const pictures = [
         "name": "Morty Smith",
         "image": "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
     },
-    // {
-    //     "id": 3,
-    //     "name": "Summer Smith",
-    //     "image": "https://rickandmortyapi.com/api/character/avatar/3.jpeg"
-    // },
-    // {
-    //     "id": 4,
-    //     "name": "Beth Smith",
-    //     "image": "https://rickandmortyapi.com/api/character/avatar/4.jpeg"
-    // },
-    // {
-    //     "id": 5,
-    //     "name": "Jerry Smith",
-    //     "image": "https://rickandmortyapi.com/api/character/avatar/5.jpeg"
-    // },
-    // {
-    //     "id": 6,
-    //     "name": "Abadango Cluster Princess",
-    //     "image": "https://rickandmortyapi.com/api/character/avatar/6.jpeg"
-    // },
-    // {
-    //     "id": 7,
-    //     "name": "Abradolf Lincler",
-    //     "image": "https://rickandmortyapi.com/api/character/avatar/7.jpeg"
-    // },
-    // {
-    //     "id": 8,
-    //     "name": "Adjudicator Rick",
-    //     "image": "https://rickandmortyapi.com/api/character/avatar/8.jpeg"
-    // }
+    {
+        "id": 3,
+        "name": "Summer Smith",
+        "image": "https://rickandmortyapi.com/api/character/avatar/3.jpeg"
+    },
+    {
+        "id": 4,
+        "name": "Beth Smith",
+        "image": "https://rickandmortyapi.com/api/character/avatar/4.jpeg"
+    },
+    {
+        "id": 5,
+        "name": "Jerry Smith",
+        "image": "https://rickandmortyapi.com/api/character/avatar/5.jpeg"
+    },
+    {
+        "id": 6,
+        "name": "Abadango Cluster Princess",
+        "image": "https://rickandmortyapi.com/api/character/avatar/6.jpeg"
+    },
+    {
+        "id": 7,
+        "name": "Abradolf Lincler",
+        "image": "https://rickandmortyapi.com/api/character/avatar/7.jpeg"
+    },
+    {
+        "id": 8,
+        "name": "Adjudicator Rick",
+        "image": "https://rickandmortyapi.com/api/character/avatar/8.jpeg"
+    }
 ];
+
+const gameBox = document.querySelector('.game-box');
 
 const shuffleArray = (arr) => {
     const arrayCopy = JSON.parse(JSON.stringify(arr));
 
     return arrayCopy.sort(() => 0.5 - Math.random())
 };
-
-const shuffledArrayOne = shuffleArray(pictures);
-const shuffledArrayTwo = shuffleArray(pictures);
 
 const createCards = (array) => array.map((picture) => {
     const cardContainer = document.createElement('div');
@@ -66,18 +65,33 @@ const createCards = (array) => array.map((picture) => {
     return cardContainer;
 });
 
-document.querySelector('.game-box')
-    .append(...createCards(shuffledArrayOne), ...createCards(shuffledArrayTwo));
-
-const cards = document.querySelectorAll('.card-container');
-const gameBox = document.querySelector('.count');
-const popup = document.querySelector('.popup');
-const popupButton = document.querySelector('.popup_btn');
-
+let cards;
+let count = 0;
 let isFlippedCard = false;
 let firstCard;
 let secondCard;
-let count = 0;
+
+const countText = document.querySelector('.count');
+const popup = document.querySelector('.popup');
+const popupButton = document.querySelector('.popup_btn');
+
+const startGame = () => {
+    const shuffledArrayOne = shuffleArray(pictures);
+    const shuffledArrayTwo = shuffleArray(pictures);
+
+    gameBox
+        .append(...createCards(shuffledArrayOne), ...createCards(shuffledArrayTwo));
+
+    cards = document.querySelectorAll('.card-container');
+
+    count = 0;
+
+    countText.innerText = `Number of moves - ${ count }`;
+
+    addEventListenerToCard(cards);
+};
+
+startGame();
 
 const toggleCssClasses = (item, classNames) => classNames.forEach((className) => item.classList.toggle(className));
 
@@ -107,12 +121,13 @@ const checkPair = (firstCard, secondCard) => {
 }
 
 const checkBoard = () => {
-    const isBoardClear = [...cards].every(card => card.classList.contains('flipped'));
+    const isBoardClear =
+        [...cards].every(card => card.classList.contains('flipped') && card.classList.contains('none'));
 
     if (isBoardClear) {
         setTimeout(() => {
             toggleCssClasses(popup, ['visible']);
-        }, 1000);
+        }, 50);
     }
 };
 
@@ -138,24 +153,28 @@ const flipCard = (card) => {
 
     count++;
 
-    gameBox.innerText = `Number of moves - ${ count }`;
+    countText.innerText = `Number of moves - ${ count }`;
 
     checkPair(firstCard, secondCard);
 
     checkBoard();
 };
 
-cards.forEach((card) => {
-    card.addEventListener('click', () => {
-        flipCard(card, 'character');
+function addEventListenerToCard(arrayOfCards) {
+    arrayOfCards.forEach((card) => {
+        card.addEventListener('click', () => {
+            flipCard(card, 'character');
+        });
     });
-});
+}
 
-popupButton.addEventListener('click', () =>
-    cards.forEach((card) => {
-        removeCssClasses(card, ['none', 'flipped']);
-        removeCssClasses(popup, ['visible']);
-        count = 0;
-        gameBox.innerText = `Number of moves - ${ count }`;
-    })
+popupButton.addEventListener('click', () => {
+        toggleCssClasses(popup, ['visible']);
+
+        cards.forEach((card) => {
+            card.remove();
+        });
+
+        startGame();
+    }
 );
