@@ -130,9 +130,10 @@ const checkBoard = () => {
         }, 50);
     }
 };
+
 const checkFlippedCards = () => {
     const flippedCards = [...document.querySelectorAll('.card-container')]
-        .filter((card) => card.classList.contains('flipped'));
+        .filter((card) => card.classList.contains('flipped') && !card.classList.contains('none'));
 
     return flippedCards.length >= 2
 };
