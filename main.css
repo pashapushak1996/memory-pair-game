@@ -55,7 +55,7 @@ img {
     margin: 0 auto;
 
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     grid-template-columns:repeat(4, 1fr);
     gap: 10px;
 }
