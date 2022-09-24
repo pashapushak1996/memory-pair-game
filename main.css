@@ -208,3 +208,9 @@ img {
         font-size: 14px;
     }
 }
+
+@media only screen and (min-width: 1439px) {
+    html {
+        font-size: 12px;
+    }
+}
